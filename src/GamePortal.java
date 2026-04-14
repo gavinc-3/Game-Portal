@@ -1,64 +1,59 @@
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Scanner;
-
-import Game.Game;
-import Quiz.Quiz;
-import Game.ErrorCheck;
-import Store.StoreGame;
+import java.util.List;
 
 public class GamePortal {
-    static Scanner sc = new Scanner(System.in);
-    static ArrayList<Game> games = new ArrayList<Game>();
-    public static void main(String[] args) {
-        HashMap<String, Integer> gameCounts = new HashMap<String, Integer>();
-        // writes highscores
-        File f = new File("Highscore.csv");
-        while (true) {
-            loadGames();
-            
-            System.out.println("Which game would you like to play?");
-            printGameChoices();
-            Game g = getGameChoice();
-            System.out.println("You're playing " + g.getGameName());
+    private static final List<Game> GAMES = new ArrayList<>();
+    private static final File HIGHSCORE_FILE = new File("Highscore.csv");
 
-            g.play();
-            g.writeHighScore(f);
-            // add one to game counts the hashmap, if you wanted to store some stats.
-            String gameKey = g.getGameName();
-            if (gameCounts.containsKey(gameKey)) {
-                gameCounts.put(gameKey, gameCounts.get(gameKey) + 1);
-            } else {
-                gameCounts.put(gameKey, 1);
+    public static void main(String[] args) {
+        loadGames();
+
+        while (true) {
+            System.out.println("Which game would you like to play? Enter q to quit.");
+            printGameChoices();
+            Game game = getGameChoice();
+            if (game == null) {
+                System.out.println("Thanks for playing!");
+                return;
+            }
+            System.out.println("You're playing " + game.getGameName());
+
+            game.play();
+            game.writeHighScore(HIGHSCORE_FILE);
+            if (game.shouldQuitPortal()) {
+                System.out.println("Thanks for playing!");
+                return;
             }
         }
     }
 
-    public static void loadGames() {
-        games.clear();
-        games.add(new AsciiArt());
+    private static void loadGames() {
+        GAMES.clear();
+        GAMES.add(new AsciiArtWithClasses());
     }
 
-    public static void printGameChoices() {
+    private static void printGameChoices() {
         int n = 1;
-        for (Game s : games) {
-            System.out.println("[" + (n++) + "]: " + s.getGameName());
+        for (Game game : GAMES) {
+            System.out.println("[" + (n++) + "]: " + game.getGameName());
         }
     }
 
-    /*
-     * Takes in user input for printing out all games in
-     */
-    public static Game getGameChoice() {
-        int choice = ErrorCheck.getInt(sc);
-        // for it to be numbered, we can't use hashmaps.
-        while (choice < 1 || choice > games.size()) {
-            System.out.println("We don't have this number. Try again.");
-            choice = ErrorCheck.getInt(sc);
+    private static Game getGameChoice() {
+        int choice = ErrorCheck.getInt();
+        if (choice == ErrorCheck.QUIT_CODE) {
+            return null;
         }
 
-        // valid game choice
-        return games.get(choice - 1);
+        while (choice < 1 || choice > GAMES.size()) {
+            System.out.println("We don't have this number. Try again.");
+            choice = ErrorCheck.getInt();
+            if (choice == ErrorCheck.QUIT_CODE) {
+                return null;
+            }
+        }
+
+        return GAMES.get(choice - 1);
     }
 }
