@@ -31,6 +31,7 @@ public class GamePortal {
     private static void loadGames() {
         GAMES.clear();
         GAMES.add(new AsciiArtWithClasses());
+        GAMES.add(new Quiz());
     }
 
     private static void printGameChoices() {
