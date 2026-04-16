@@ -32,6 +32,7 @@ public class GamePortal {
         GAMES.clear();
         GAMES.add(new AsciiArtWithClasses());
         GAMES.add(new Quiz());
+        GAMES.add(new Election());
     }
 
     private static void printGameChoices() {

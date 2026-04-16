@@ -1,4 +1,3 @@
-import java.io.IOException;
 import java.util.Random;
 
 public class AsciiArtWithClasses extends Game {
