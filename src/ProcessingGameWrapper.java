@@ -1,38 +1,33 @@
 import java.io.File;
+import java.util.concurrent.CountDownLatch;
 import processing.core.PApplet;
 
 public class ProcessingGameWrapper extends Game {
 
-    private final Object lock = new Object();
+    private CountDownLatch latch;
     private boolean quitPortal = false;
 
     @Override
     public String getGameName() {
-        return "Exploding Kittens";
+        return "Exploding Kittens (Processing)";
     }
 
     @Override
     public void play() {
         App app = new App(this);
-
-        String[] args = {"App"};
+        String[] args = {"Exploding Kittens"};
         PApplet.runSketch(args, app);
-
-        synchronized (lock) {
-            try {
-                lock.wait();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+        latch = new CountDownLatch(1);
+        try {
+            latch.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 
     public void signalGameOver(boolean quitPortal) {
         this.quitPortal = quitPortal;
-
-        synchronized (lock) {
-            lock.notify();
-        }
+        if (latch != null) latch.countDown();
     }
 
     @Override
@@ -51,7 +46,7 @@ public class ProcessingGameWrapper extends Game {
     }
 
     @Override
-    public boolean isHighScore(String name, String score) {
+    public boolean isHighScore(String score, String currentHighScore) {
         return false;
     }
 }
