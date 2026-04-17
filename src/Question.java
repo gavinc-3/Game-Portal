@@ -1,5 +1,8 @@
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import Game.Answer;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Arrays;

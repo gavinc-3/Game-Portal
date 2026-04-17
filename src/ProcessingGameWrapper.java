@@ -1,4 +1,5 @@
 import java.io.File;
+import processing.core.PApplet;
 
 public class ProcessingGameWrapper extends Game {
 
@@ -7,7 +8,7 @@ public class ProcessingGameWrapper extends Game {
 
     @Override
     public String getGameName() {
-        return "Exploding Kittens (Processing)";
+        return "Exploding Kittens";
     }
 
     @Override
@@ -15,9 +16,8 @@ public class ProcessingGameWrapper extends Game {
         App app = new App(this);
 
         String[] args = {"App"};
-        processing.core.PApplet.runSketch(args, app);
+        PApplet.runSketch(args, app);
 
-        // WAIT until the Processing window closes
         synchronized (lock) {
             try {
                 lock.wait();

@@ -249,12 +249,13 @@ public class App extends PApplet {
         game.nextTurn();
     }
 
-    @Override
+@Override
     public void exit() {
         super.exit();
+    }
 
-        if (wrapper != null) {
-            wrapper.signalGameOver(false);
-        }
+    @Override
+    public void exitActual() {
+        // Do nothing to prevent JVM exit for GamePortal
     }
 }
