@@ -47,7 +47,7 @@ public class Election extends Game{
                     System.out.print("\nEnter state name (enter \"quit\" to exit): ");
                     String stateInput = sc.nextLine().trim().toLowerCase();
                     if (stateInput.equals("quit")) 
-                        break;
+                        return;
 
                     System.out.print("Enter county name: ");
                     String countyInput = sc.nextLine().trim().toLowerCase();
@@ -61,9 +61,6 @@ public class Election extends Game{
                         System.out.println("No data found for that state and county.");
                     }
                 }
-
-                System.out.println("I hope I was helpful!");
-                sc.close();
 
     } catch (Exception e) {
         e.printStackTrace();

@@ -2,14 +2,12 @@ import processing.core.PApplet;
 import java.util.HashMap;
 import java.util.List;
 import processing.core.PImage;
-import src.Card;
-import src.ExplodingKittens;
-import src.ProcessingGameWrapper;
+
 
 public class App extends PApplet {
 
-    private ProcessingGameWrapper wrapper;
 
+    ProcessingGameWrapper wrapper;
     ExplodingKittens game;
 
     HashMap<String, PImage> cardImages = new HashMap<>();
@@ -34,18 +32,19 @@ public class App extends PApplet {
 
     final int FADE_TIME = 3000;
 
-    public App(ProcessingGameWrapper wrapper) {
-        this.wrapper = wrapper;
-    }
 
     @Override
     public void settings() {
         size(1000, 1000);
     }
 
+     public App(ProcessingGameWrapper wrapper) {
+        this.wrapper = wrapper;
+    }
+
     @Override
     public void setup() {
-        String path = "src/Graphics copy/";
+        String path = "src/Graphics/";
 
         stackImage = loadImage(path + "Background.jpg");
         startScreenImg = loadImage(path + "Startscreen.jpg");
@@ -258,4 +257,6 @@ public class App extends PApplet {
     public void exitActual() {
         // Do nothing to prevent JVM exit for GamePortal
     }
+
+
 }
