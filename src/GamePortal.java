@@ -3,11 +3,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GamePortal {
-    private static final List<Game> GAMES = new ArrayList<>();
+    private static final List<Game> games = new ArrayList<>();
     private static final File HIGHSCORE_FILE = new File("Highscore.csv");
 
     public static void main(String[] args) {
-        loadGames();
+        loadgames();
 
         while (true) {
             System.out.println("Which game would you like to play? Enter q to quit.");
@@ -28,17 +28,17 @@ public class GamePortal {
         }
     }
 
-    private static void loadGames() {
-        GAMES.clear();
-        GAMES.add(new AsciiArtWithClasses());
-        GAMES.add(new Quiz());
-        GAMES.add(new Election());
-        GAMES.add(new ProcessingGameWrapper()); 
+    private static void loadgames() {
+        games.clear();
+        games.add(new AsciiArtWithClasses());
+        games.add(new Quiz());
+        games.add(new Election());
+        games.add(new ProcessingGameWrapper()); 
     }
 
     private static void printGameChoices() {
         int n = 1;
-        for (Game game : GAMES) {
+        for (Game game : games) {
             System.out.println("[" + (n++) + "]: " + game.getGameName());
         }
     }
@@ -49,7 +49,7 @@ public class GamePortal {
             return null;
         }
 
-        while (choice < 1 || choice > GAMES.size()) {
+        while (choice < 1 || choice > games.size()) {
             System.out.println("We don't have this number. Try again.");
             choice = ErrorCheck.getInt();
             if (choice == ErrorCheck.QUIT_CODE) {
@@ -57,6 +57,6 @@ public class GamePortal {
             }
         }
 
-        return GAMES.get(choice - 1);
+        return games.get(choice - 1);
     }
 }

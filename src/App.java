@@ -21,7 +21,7 @@ public class App extends PApplet {
 
     final int GameOverState = 2;
     final int Startstate = 0;
-    final int Gamestate = 1;
+    final int gamestate = 1;
 
     int currentState = Startstate;
 
@@ -155,7 +155,7 @@ public class App extends PApplet {
         }
 
         if (currentState == Startstate) {
-            currentState = Gamestate;
+            currentState = gamestate;
             return;
         }
 
@@ -195,7 +195,7 @@ public class App extends PApplet {
         game = new ExplodingKittens(cardImages, gameLog, logTimers, this);
         game.initializeGame();
 
-        currentState = Gamestate;
+        currentState = gamestate;
     }
 
     public void displayGameInfo() {
